@@ -43,7 +43,7 @@ class TelegramConfig(MutableMapping[_KT, _VT]):
                 if key == "download_path":
                     value = AsyncPath(Path.home() / "downloads")
                 elif key == "github_repo":
-                    value = "adekmaulana/caligo"
+                    value = "Mayuri-Chan/caligo"
 
                 if value == "":
                     value = None

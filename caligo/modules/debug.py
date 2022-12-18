@@ -1,3 +1,6 @@
+import importlib.metadata
+import pyrogram
+import sys
 from datetime import datetime
 from typing import ClassVar, Optional
 
@@ -6,7 +9,7 @@ from aiohttp.client_exceptions import ClientConnectorError
 from pyrogram.errors import UsernameInvalid, PeerIdInvalid
 
 from .. import command, module, util
-
+from ..version import __version__
 
 class DebugModule(module.Module):
     name: ClassVar[str] = "Debug"
@@ -148,3 +151,27 @@ class DebugModule(module.Module):
                 return f'https://del.dog/{resp_data["key"]}'
         except ClientConnectorError:
             return "__Dogbin is currently experiencing issues. Try again later.__"
+
+    @command.desc("Get userbot status.")
+    @command.alias("on")
+    async def cmd_alive(self, ctx: command.Context) -> str:
+        pl_version = None
+        caligo_repo = ctx.bot.getConfig["github_repo"]
+        alive_text = f"[caligo v{__version__}](https://github.com/{caligo_repo}) services is running...\n"
+        alive_text += f"•  ⚙️ Pyrogram      : v{pyrogram.__version__}\n"
+        alive_text += f"•  🐍 Python           : v{sys.version.split(' ')[0]}"
+        if hasattr(sys, "pypy_version_info"):
+            alive_text += f"•  🐍 Pypy           : v{sys.pypy_version_info.major}.{sys.pypy_version_info.minor}.{sys.pypy_version_info.micro}"
+        elif hasattr(sys, "pyston_version_info"):
+            alive_text += f"•  🐍 Pyston         : v{sys.pyston_version_info.major}.{sys.pyston_version_info.minor}.{sys.pyston_version_info.micro}"
+        try:
+            pl_version = importlib.metadata.version('pyston-lite')
+        except Exception:
+            pass
+        if pl_version:
+            alive_text += f"\n•  ⚙️ Pyston Lite    : v{pl_version}"
+        start = datetime.now()
+        await ctx.msg.edit_text(alive_text+"\n•  📶 Latency          : ⏳", disable_web_page_preview=True)
+        end = datetime.now()
+        latency = (end - start).microseconds / 1000
+        await ctx.msg.edit_text(alive_text+f"\n•  📶 Latency          : {latency}ms", disable_web_page_preview=True)
