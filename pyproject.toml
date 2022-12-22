@@ -31,7 +31,7 @@ classifiers = [
 "Community" = ""
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4"
+python = ">=3.9,<4"
 
 # Core
 aiohttp = "^3.8.3"
