@@ -38,7 +38,6 @@ aiohttp = "^3.8.3"
 aiorun = "^2022.11.1"
 colorlog = "^6.7.0"
 pymongo = "^4.3.3"
-Pyrogram = { git = "https://github.com/wulan17/pyrogram.git", branch = "master"}
 python-dotenv = "^0.21.0"
 TgCrypto = "^1.2.5"
 
@@ -67,6 +66,7 @@ beautifulsoup4 = "^4.11.1"
 emoji = "^2.2.0"
 Pillow = "^9.3.0"
 tenacity = "^8.1.0"
+pyrofork = {git = "https://github.com/Mayuri-Chan/pyrofork", rev = "master"}
 
 [tool.poetry.dev-dependencies]
 isort = {version = "^5.11.2", extras = ["pyproject"]}
